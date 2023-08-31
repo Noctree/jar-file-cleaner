@@ -1,0 +1,9 @@
+#Rider
+.idea/
+
+#Build artefacts
+**/obj/
+**/bin/
+
+#Testing
+**/TEST/
