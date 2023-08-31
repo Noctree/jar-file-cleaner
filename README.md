@@ -2,7 +2,9 @@
 A simple C# tool for pruning jar files of unused/unnecessary code and resources from a jar file
 
 I created this because I encountered a Maven build problem, where contents of an external library would be packaged into my resulting jar file, despite setting it as "provided".
-After fighting with the clunky Java build system I decided to just give up on Java and brute-force the solution by writing this.
+
+After fighting with the clunky Java build system I decided to just give up on Java and brute-force the solution by writing this. (in the superior language - C#)
+
 
 ## Usage
 
@@ -17,3 +19,38 @@ After fighting with the clunky Java build system I decided to just give up on Ja
   -o, --output       (Optional) The output JAR file, overwrites the original if unspecified
 
   --pause            Pauses execution before end, for debugging
+
+
+## How to integrate with Maven
+
+Add this to the <plugins> section of your pom.xml file and customize it for your project.
+This will then run the tool each time you run 'mvn package'
+
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.0.0</version>
+    <executions>
+        <execution>
+            <id>run-external-tool</id>
+            <phase>package</phase>
+            <goals>
+                <goal>exec</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <executable>path/to/the/tool.exe</executable>
+        <arguments>
+            <argument>-v</argument>
+            <argument>-r</argument>
+            <argument>${project.basedir}\src\main\resources</argument>
+            <argument>-i</argument>
+            <argument>${project.basedir}\target\your-output.jar</argument>
+            <argument>-p</argument>
+            <argument>com.yourdomain.yourpackage</argument>
+            <argument>-o</argument>
+            <argument>C:\Path\to\your\output\file.jar</argument>
+        </arguments>
+    </configuration>
+</plugin>
