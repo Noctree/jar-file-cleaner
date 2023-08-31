@@ -1,0 +1,32 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET Publish
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build Windows
+      run: dotnet publish -c Release -r win-x64 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained -o out-win
+    - name: Build Linux
+      run: dotnet publish -c Release -r linux-x64 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained -o out-linux
+    - name: Publish
+      uses: AButler/upload-release-assets@v2.0
+      with:
+        files: 'out-win/jar-file-cleaner.exe;out-linux/jar-file-cleaner'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
