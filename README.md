@@ -26,6 +26,7 @@ After fighting with the clunky Java build system I decided to just give up on Ja
 Add this to the <plugins> section of your pom.xml file and customize it for your project.
 This will then run the tool each time you run 'mvn package'
 
+```
 <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>exec-maven-plugin</artifactId>
@@ -54,3 +55,4 @@ This will then run the tool each time you run 'mvn package'
         </arguments>
     </configuration>
 </plugin>
+```
