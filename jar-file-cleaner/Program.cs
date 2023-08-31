@@ -3,9 +3,10 @@ using System.Text.RegularExpressions;
 using CommandLine;
 using static JarFileCleaner.Logger;
 
+[assembly:AssemblyCopyright("Copyright © Matyáš Holub 2023")]
+
 namespace JarFileCleaner;
 
-[assembly:AssemblyCopyright("Copyright © Matyáš Holub 2023")]
 public static class Program
 {
     const string PackagesRegex = """^([a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)*)(,[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)*)*$""";
